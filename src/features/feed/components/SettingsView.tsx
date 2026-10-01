@@ -94,8 +94,8 @@ export function SettingsView() {
               Automatically start a fresh scrape at :45 past each hour while the dock is open.
             </p>
             <p className="mt-1 text-[8.5px] leading-relaxed text-foreground/20">
-              This keeps fresh jobs ready by the top of the hour. It pauses when the dock is closed
-              and resumes next launch.
+              This keeps fresh jobs ready by the top of the hour. If your Mac was asleep or the dock
+              was closed at :45, it runs once as soon as the dock is back, then returns to :45.
             </p>
           </div>
           <button

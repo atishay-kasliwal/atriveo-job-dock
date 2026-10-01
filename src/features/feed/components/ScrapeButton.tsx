@@ -11,7 +11,6 @@ import {
 const AUTO_SCRAPE_MINUTE_OF_HOUR = 45
 const AUTO_SCRAPE_RETRY_MS = 5 * 60 * 1000
 const IDLE_AUTO_SCRAPE_CHECK_MS = 30 * 1000
-const AUTO_SCRAPE_SLOT_WINDOW_MS = 90 * 1000
 
 function latestAutoScrapeSlotMs(nowMs: number) {
   const slot = new Date(nowMs)
@@ -19,10 +18,6 @@ function latestAutoScrapeSlotMs(nowMs: number) {
   slot.setMinutes(AUTO_SCRAPE_MINUTE_OF_HOUR)
   if (slot.getTime() > nowMs) slot.setHours(slot.getHours() - 1)
   return slot.getTime()
-}
-
-function isWithinAutoScrapeSlotWindow(nowMs: number, slotMs: number) {
-  return nowMs >= slotMs && nowMs < (slotMs + AUTO_SCRAPE_SLOT_WINDOW_MS)
 }
 
 function phaseFor(state: ScrapeRunState, name: string): ScrapePhase | undefined {
@@ -84,9 +79,12 @@ export function ScrapeButton() {
     const lastRunAtRaw = state.finishedAt ?? state.updatedAt ?? state.startedAt ?? null
     const lastRunAtMs = lastRunAtRaw ? Date.parse(lastRunAtRaw) : Number.NaN
     const nowMs = now
+    // Due whenever no run has happened since the latest :45, not only during a
+    // short window after it. A laptop asleep at :45, or a backgrounded window
+    // whose timers macOS throttled, used to skip that hour silently and wake to
+    // a stale feed; now it catches up once at the next check, then stays on :45.
     const latestSlotMs = latestAutoScrapeSlotMs(nowMs)
-    const isDue = isWithinAutoScrapeSlotWindow(nowMs, latestSlotMs)
-      && (Number.isNaN(lastRunAtMs) || lastRunAtMs < latestSlotMs)
+    const isDue = Number.isNaN(lastRunAtMs) || lastRunAtMs < latestSlotMs
     if (!isDue) return
     if ((nowMs - lastAutoAttemptAt.current) < AUTO_SCRAPE_RETRY_MS) return
 
