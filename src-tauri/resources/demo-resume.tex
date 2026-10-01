@@ -1,0 +1,45 @@
+% Sample resume bundled for Atriveo Dock's demo mode. Fictional person.
+\documentclass[10.5pt,letterpaper]{article}
+\usepackage[margin=0.6in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\titlerule]
+\titlespacing*{\section}{0pt}{8pt}{4pt}
+\setlist[itemize]{leftmargin=1.2em, itemsep=1pt, topsep=2pt}
+\newcommand{\role}[4]{\textbf{#1} \hfill #2\\ \textit{#3} \hfill \textit{#4}}
+\begin{document}
+\begin{center}
+{\LARGE\bfseries Alex Rivera}\\[3pt]
+Software Engineer \,|\, alex.rivera@example.com \,|\, 555-0142 \,|\, San Francisco, CA \,|\, github.com/example
+\end{center}
+
+\section{Education}
+\role{State University}{Aug 2022 -- May 2026}{M.S. Computer Science}{Anytown, CA}
+
+\section{Experience}
+\role{Northwind Labs}{Jun 2025 -- Aug 2025}{Software Engineer Intern}{New York, NY}
+\begin{itemize}
+  \item Built a Go deployment service handling 400 releases a day, cutting median deploy time from 14 to 3 minutes.
+  \item Added Kafka consumer lag alerts that caught 3 production incidents before customers noticed.
+\end{itemize}
+\role{Lumen AI}{Jan 2024 -- May 2025}{Machine Learning Engineer (Part-time)}{Remote}
+\begin{itemize}
+  \item Trained retrieval models in PyTorch that raised answer accuracy 11\% on a 2M-user RAG product.
+  \item Served models behind a FastAPI gateway at 40 ms p95 with batched GPU inference.
+  \item Wrote an evaluation harness of 1,200 labeled queries that now gates every model release.
+\end{itemize}
+
+\section{Projects}
+\textbf{Dockside} --- a Tauri + React desktop companion that ranks job postings and tailors resumes.
+\begin{itemize}
+  \item Designed a queue-backed PDF pipeline that builds a one-page resume per posting in under 5 seconds.
+\end{itemize}
+
+\section{Skills}
+\textbf{Languages:} Python, TypeScript, Go, Java, SQL \quad
+\textbf{Systems:} Kafka, Postgres, Redis, Kubernetes, AWS \quad
+\textbf{ML:} PyTorch, RAG, evaluation
+\end{document}

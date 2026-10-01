@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm:  calc(var(--radius) - 4px);
+  --radius-md:  calc(var(--radius) - 2px);
+  --radius-lg:  var(--radius);
+  --radius-xl:  calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+
+  --color-background:           var(--background);
+  --color-foreground:           var(--foreground);
+  --color-card:                 var(--card);
+  --color-card-foreground:      var(--card-foreground);
+  --color-primary:              var(--primary);
+  --color-primary-foreground:   var(--primary-foreground);
+  --color-muted:                var(--muted);
+  --color-muted-foreground:     var(--muted-foreground);
+  --color-border:               var(--border);
+  --color-ring:                 var(--ring);
+
+  --color-dock-glass:      var(--dock-glass);
+  --color-dock-card:       var(--dock-card);
+  --color-status-live:     var(--status-live);
+  --color-status-warn:     var(--status-warn);
+  --color-status-danger:   var(--status-danger);
+  --color-score-cyan:      var(--score-cyan);
+  --color-source-ever:     var(--source-ever);
+
+  --shadow-dock: var(--dock-shadow);
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.75rem;
+
+  --background:         oklch(0.14 0.012 250);
+  --foreground:         oklch(0.97 0.004 240);
+  --card:               oklch(0.19 0.016 250);
+  --card-foreground:    oklch(0.97 0.004 240);
+  --primary:            oklch(0.80 0.14 205);
+  --primary-foreground: oklch(0.14 0.012 250);
+  --muted:              oklch(0.22 0.016 250);
+  --muted-foreground:   oklch(0.58 0.018 250);
+  --border:             oklch(1 0 0 / 0.07);
+  --ring:               oklch(0.80 0.14 205 / 0.45);
+
+  --dock-glass:   oklch(0.09 0.010 250 / 0.94);
+  --dock-card:    oklch(0.12 0.010 250 / 0.80);
+  --dock-shadow:  0 32px 80px -16px oklch(0 0 0 / 0.7),
+                  0 0 0 1px oklch(1 0 0 / 0.06),
+                  inset 0 1px 0 oklch(1 0 0 / 0.08);
+
+  --status-live:   oklch(0.76 0.16 150);
+  --status-warn:   oklch(0.80 0.14 75);
+  --status-danger: oklch(0.68 0.19 25);
+  --score-cyan:    oklch(0.80 0.14 205);
+
+  /* Feed provenance. Violet (hue 300) is deliberately far from every hue in the
+     score scale — 150 green, 75 amber, 25 red, 205 cyan — so an aggregator row
+     can never be mistaken for a scored one. Same L/C family as the rest so it
+     sits in the palette rather than shouting. */
+  --source-ever:      oklch(0.72 0.16 300);
+  --source-ever-soft: oklch(0.72 0.16 300 / 0.07);
+
+  --tl-red:    #ff5f57;
+  --tl-yellow: #febc2e;
+  --tl-green:  #28c840;
+
+  /* Smooth transitions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  * { box-sizing: border-box; }
+
+  html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  body {
+    background: transparent;
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    user-select: none;
+  }
+}
+
+/* Virtualised list scrollbar */
+.dock-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: oklch(1 0 0 / 0.12) transparent;
+}
+.dock-scroll::-webkit-scrollbar { width: 5px; }
+.dock-scroll::-webkit-scrollbar-track { background: transparent; }
+.dock-scroll::-webkit-scrollbar-thumb {
+  background: oklch(1 0 0 / 0.12);
+  border-radius: 999px;
+}
+.dock-scroll::-webkit-scrollbar-thumb:hover {
+  background: oklch(1 0 0 / 0.2);
+}
+
+/* Hide scrollbar on tab row */
+.scrollbar-none { scrollbar-width: none; }
+.scrollbar-none::-webkit-scrollbar { display: none; }

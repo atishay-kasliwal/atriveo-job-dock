@@ -1,0 +1,5 @@
+export const SYNC_CONFIG = {
+  JOB_POLL_INTERVAL_MS:     600_000,
+  TRACKER_POLL_INTERVAL_MS: 600_000,
+  STALE_AFTER_MS:           610_000,
+} as const
